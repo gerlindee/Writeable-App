@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Writable</string>
+    <string name="display_name">Display Name</string>
+    <string name="hint_email">E-mail</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_repeat_password">Repeat Password</string>
+    <string name="placeholder_terms_of_service">I have read and agree with the Terms of Service</string>
+    <string name="hint_register_button">Create Account</string>
+    <string name="placeholder_application_header">Application Header</string>
+    <string name="login_button_text">LOGIN</string>
+    <string name="text_register_account_question">Don\'t have an account?</string>
+    <string name="text_register_navigation_link">Sign up now!</string>
+    <string name="placeholder_no_internet_title">Ooooops!</string>
+    <string name="placeholder_no_internet_line_1">Slow or no internet connection.</string>
+    <string name="placeholder_no_internet_line_2">Check your internet settings and try again</string>
+    <string name="placehoder_no_internet_button">Try again?</string>
+</resources>
