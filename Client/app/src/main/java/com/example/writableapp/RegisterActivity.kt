@@ -11,12 +11,16 @@ import android.view.View
 import android.webkit.WebView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
+import com.example.writableapp.Utils.DesignUtils
 import kotlinx.android.synthetic.main.activity_register.*
+import okhttp3.*
+import org.jetbrains.annotations.NotNull
+import java.io.IOException
 
 class RegisterActivity : AppCompatActivity() {
 
     // Web view for the Terms and Conditions
-    private var webView: WebView?= null
+    private var webView: WebView? = null
 
     // User data from the screen
     private var password: String? = null
@@ -32,17 +36,40 @@ class RegisterActivity : AppCompatActivity() {
         // Create instance of the web view
         webView = WebView(this)
 
-        // Set the Terms and Conditions part of the string to an URL
-        val termsAndConditionsMessage = "I have read and therefore agree with the " + "<u>" + "Terms and Conditions" + "</u>" + "."
-        text_terms_service.text = HtmlCompat.fromHtml(termsAndConditionsMessage, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        // Create an instance of the OkHTTP client (will be used to communicate with the server)
+        var okHttpClient = OkHttpClient()
 
-        // The register button is only enabled when the user has checked the Terms and Conditions box s
+        // Set the Terms and Conditions part of the string to an URL
+        val termsAndConditionsMessage =
+            "I have read and therefore agree with the " + "<u>" + "Terms and Conditions" + "</u>" + "."
+        text_terms_service.text =
+            HtmlCompat.fromHtml(termsAndConditionsMessage, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+        // The register button is only enabled when the user has checked the Terms and Conditions box
         checkbox_terms_service.setOnCheckedChangeListener { _, isChecked ->
             register_button.isEnabled = isChecked
         }
 
         register_button.setOnClickListener {
-            // TODO
+            val httpRequest = Request.Builder().url("http://d92e-35-231-76-233.ngrok.io/").build()
+            okHttpClient.newCall(httpRequest).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    DesignUtils.showSnackbar(
+                        window.decorView.rootView,
+                        "Could not connect to server!",
+                        this@RegisterActivity
+                    )
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    DesignUtils.showSnackbar(
+                        window.decorView.rootView,
+                        response.body!!.string(),
+                        this@RegisterActivity
+                    )
+                }
+
+            })
         }
 
         text_terms_service.setOnClickListener {
@@ -58,7 +85,13 @@ class RegisterActivity : AppCompatActivity() {
         register_avatar_remove.setOnClickListener {
             register_avatar_remove.visibility = View.GONE
             selectedPhotoUri = null
-            register_avatar_civ.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.default_icon, null))
+            register_avatar_civ.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    resources,
+                    R.drawable.default_icon,
+                    null
+                )
+            )
         }
     }
 

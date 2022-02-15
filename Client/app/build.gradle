@@ -33,11 +33,15 @@ android {
 }
 
 dependencies {
-    // material design dependency
+
+    // Material design library
     implementation 'com.google.android.material:material:1.2.0-alpha02'
 
     // CircleImageView library
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // OkHTTP library for making HTTP-based network calls
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
