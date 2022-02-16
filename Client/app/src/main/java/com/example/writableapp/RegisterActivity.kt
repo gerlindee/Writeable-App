@@ -9,8 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
+import com.example.writableapp.Exceptions.EmptyFieldsException
+import com.example.writableapp.Exceptions.IException
+import com.example.writableapp.Exceptions.UnmatchedPasswordsException
+import com.example.writableapp.Model.User
 import com.example.writableapp.Utils.DesignUtils
 import kotlinx.android.synthetic.main.activity_register.*
 import okhttp3.*
@@ -23,10 +28,8 @@ class RegisterActivity : AppCompatActivity() {
     private var webView: WebView? = null
 
     // User data from the screen
-    private var password: String? = null
+    private var user: User? = null
     private var repeatedPassword: String? = null
-    private var email: String? = null
-    private var displayName: String? = null
     private var selectedPhotoUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,9 +38,6 @@ class RegisterActivity : AppCompatActivity() {
 
         // Create instance of the web view
         webView = WebView(this)
-
-        // Create an instance of the OkHTTP client (will be used to communicate with the server)
-        var okHttpClient = OkHttpClient()
 
         // Set the Terms and Conditions part of the string to an URL
         val termsAndConditionsMessage =
@@ -51,25 +51,15 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         register_button.setOnClickListener {
-            val httpRequest = Request.Builder().url("http://d92e-35-231-76-233.ngrok.io/").build()
-            okHttpClient.newCall(httpRequest).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    DesignUtils.showSnackbar(
-                        window.decorView.rootView,
-                        "Could not connect to server!",
-                        this@RegisterActivity
-                    )
-                }
+            try {
+                bindLayoutData()
+                checkFieldsEmpty()
+                checkPasswordsMatch()
+                createAccount()
+            } catch (ex: IException) {
+                ex.displayMessageWithSnackbar(window.decorView.rootView, this)
+            }
 
-                override fun onResponse(call: Call, response: Response) {
-                    DesignUtils.showSnackbar(
-                        window.decorView.rootView,
-                        response.body!!.string(),
-                        this@RegisterActivity
-                    )
-                }
-
-            })
         }
 
         text_terms_service.setOnClickListener {
@@ -110,6 +100,75 @@ class RegisterActivity : AppCompatActivity() {
         val source = ImageDecoder.createSource(this.contentResolver, selectedPhotoUri!!)
         val bitmap = ImageDecoder.decodeBitmap(source)
         register_avatar_civ.setImageBitmap(bitmap)
+    }
+
+    private fun bindLayoutData() {
+        user = User(
+            "",
+            register_username.text.toString(),
+            "/content/drive/MyDrive/Colab/20220216080735.png",
+            register_email.text.toString(),
+            register_password.text.toString()
+        )
+        repeatedPassword = register_r_password.text.toString()
+    }
+
+    private fun checkFieldsEmpty() {
+        if (user!!.getPassword().isEmpty() ||
+            user!!.getEmail().isEmpty() ||
+            repeatedPassword!!.isEmpty() ||
+            user!!.getDisplayName().isEmpty()
+        ) {
+            throw EmptyFieldsException()
+        }
+    }
+
+    private fun checkPasswordsMatch() {
+        if (user!!.getPassword() != repeatedPassword) {
+            throw UnmatchedPasswordsException()
+        }
+    }
+
+    private fun createAccount() {
+        val okHttpClient = OkHttpClient()
+
+        val requestBody = FormBody.Builder()
+            .add("display_name", user!!.getDisplayName())
+            .add("avatar_url", user!!.getAvatarURL())
+            .add("email", user!!.getEmail())
+            .add("password", user!!.getPassword())
+            .build()
+
+        val httpRequest = Request.Builder().url("http://8237-35-247-56-171.ngrok.io/register")
+            .post(requestBody)
+            .build()
+
+        okHttpClient.newCall(httpRequest).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                DesignUtils.showSnackbar(
+                    window.decorView.rootView,
+                    "Could not connect to server!",
+                    this@RegisterActivity
+                )
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.body!!.string() == "200") {
+                    DesignUtils.showSnackbar(
+                        window.decorView.rootView,
+                        "Account created successfully!",
+                        this@RegisterActivity
+                    )
+                } else {
+                    DesignUtils.showSnackbar(
+                        window.decorView.rootView,
+                        response.body!!.string(),
+                        this@RegisterActivity
+                    )
+                }
+            }
+
+        })
     }
 
     // Open the web view with the Terms and Conditions
