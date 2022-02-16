@@ -19,7 +19,7 @@ class DesignUtils {
                 R.color.colorAccent
             ))
             val layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
-            layoutParams.setMargins(0, 2100, 0, 0)
+            layoutParams.setMargins(0, 2055, 0, 0)
             snackbar.view.layoutParams = layoutParams
             snackbar.show()
         }
