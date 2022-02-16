@@ -2,6 +2,8 @@ package com.example.writableapp
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -9,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import com.example.writableapp.Exceptions.EmptyFieldsException
@@ -19,7 +20,6 @@ import com.example.writableapp.Model.User
 import com.example.writableapp.Utils.DesignUtils
 import kotlinx.android.synthetic.main.activity_register.*
 import okhttp3.*
-import org.jetbrains.annotations.NotNull
 import java.io.IOException
 
 class RegisterActivity : AppCompatActivity() {
@@ -154,11 +154,18 @@ class RegisterActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response) {
                 if (response.body!!.string() == "200") {
-                    DesignUtils.showSnackbar(
-                        window.decorView.rootView,
-                        "Account created successfully!",
-                        this@RegisterActivity
-                    )
+                    runOnUiThread {
+                        AlertDialog.Builder(this@RegisterActivity)
+                            .setTitle("Success")
+                            .setMessage("Account created successfully!")
+                            .setPositiveButton("Confirm", DialogInterface.OnClickListener { _, _ ->
+                                run {
+                                    val loginIntent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                                    startActivity(loginIntent)
+                                }
+                            })
+                            .show()
+                    }
                 } else {
                     DesignUtils.showSnackbar(
                         window.decorView.rootView,

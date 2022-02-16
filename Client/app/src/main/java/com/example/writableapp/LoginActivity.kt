@@ -21,6 +21,10 @@ class LoginActivity : AppCompatActivity() {
         redirect_register_link.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
+
+        login_button.setOnClickListener {
+            loginUser()
+        }
     }
 
     override fun onResume() {
@@ -32,5 +36,13 @@ class LoginActivity : AppCompatActivity() {
         if (NetworkUtils.getConnectivityStatus(this) == NetworkUtils.TYPE_NO_CONNECTION) {
             startActivity(Intent(this, NoInternetConnectionActivity::class.java))
         }
+    }
+
+    private fun loginUser() {
+
+    }
+
+    override fun onBackPressed() {
+        // this is empty so that it does not by default go back to LoginActivity from another activity
     }
 }
