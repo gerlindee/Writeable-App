@@ -19,4 +19,7 @@
     <string name="settings_delete_history">Delete all Saved Projects</string>
     <string name="settings_delete_account">Delete Account</string>
     <string name="settings_log_out">Sign out</string>
+    <string name="hint_username">Display Name</string>
+    <string name="string_change_acc_password">Confirm Account Changes</string>
+    <string name="string_save_changes">Save Changes</string>
 </resources>

@@ -15,10 +15,6 @@ class ImageLoaderUtils(private var context: Context) {
 
     private val imageLoader: ImageLoader = ImageLoader.getInstance()
 
-    fun loadImageIntoCircleView(url: String, circleImageView: CircleImageView) {
-        Picasso.with(context).load(url).into(circleImageView)
-    }
-
     fun loadImage(url: String, imageView: ImageView) {
         loadImageWithPicasso(url, imageView)
     }

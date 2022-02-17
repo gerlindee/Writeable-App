@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.writableapp.Exceptions.IException
 import com.example.writableapp.Model.User
+import com.example.writableapp.Utils.Constants
 import com.example.writableapp.Utils.DesignUtils
 import com.example.writableapp.Utils.NetworkUtils
 import com.google.gson.Gson
@@ -64,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
             .add("password", password!!)
             .build()
 
-        val httpRequest = Request.Builder().url("http://a1c0-34-91-147-153.ngrok.io/login")
+        val httpRequest = Request.Builder().url(Constants.serverURL + "/login")
             .post(requestBody)
             .build()
 
@@ -99,14 +100,13 @@ class LoginActivity : AppCompatActivity() {
                             val mainMenuIntent = Intent(this@LoginActivity, MainMenuActivity::class.java)
                             mainMenuIntent.putExtra("USER_UID", user.getUID())
                             mainMenuIntent.putExtra("USER_DISPLAY_NAME", user.getDisplayName())
-                            mainMenuIntent.putExtra("AVATAR_URL", user.getAvatarURL())
-                            mainMenuIntent.putExtra("EMAIL", user.getEmail())
+                            mainMenuIntent.putExtra("USER_AVATAR_URL", user.getAvatarURL())
+                            mainMenuIntent.putExtra("USER_EMAIL", user.getEmail())
                             startActivity(mainMenuIntent)
                         }
                     }
                 }
             }
-
         })
     }
 

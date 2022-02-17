@@ -17,6 +17,7 @@ import com.example.writableapp.Exceptions.EmptyFieldsException
 import com.example.writableapp.Exceptions.IException
 import com.example.writableapp.Exceptions.UnmatchedPasswordsException
 import com.example.writableapp.Model.User
+import com.example.writableapp.Utils.Constants
 import com.example.writableapp.Utils.DesignUtils
 import kotlinx.android.synthetic.main.activity_register.*
 import okhttp3.*
@@ -139,7 +140,7 @@ class RegisterActivity : AppCompatActivity() {
             .add("password", user!!.getPassword())
             .build()
 
-        val httpRequest = Request.Builder().url("http://8237-35-247-56-171.ngrok.io/register")
+        val httpRequest = Request.Builder().url(Constants.serverURL + "/register")
             .post(requestBody)
             .build()
 

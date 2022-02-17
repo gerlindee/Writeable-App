@@ -32,7 +32,7 @@ class MainMenuActivity : AppCompatActivity() {
 
         setTitlesForTabs()
 
-        setUserAvatar(intent.extras!!["AVATAR_URL"].toString())
+        setUserAvatar(intent.extras!!["USER_AVATAR_URL"].toString())
 
         menuViewPager = findViewById(R.id.main_menu_viewpager)
         menuViewPager!!.adapter = MainMenuViewPagerAdapter(this)
