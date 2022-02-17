@@ -22,4 +22,6 @@
     <string name="hint_username">Display Name</string>
     <string name="string_change_acc_password">Confirm Account Changes</string>
     <string name="string_save_changes">Save Changes</string>
+    <string name="hint_current_password">Current Password</string>
+    <string name="hint_new_password">New Password</string>
 </resources>
