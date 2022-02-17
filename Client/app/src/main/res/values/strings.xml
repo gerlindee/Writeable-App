@@ -14,4 +14,9 @@
     <string name="placeholder_no_internet_line_1">Slow or no internet connection.</string>
     <string name="placeholder_no_internet_line_2">Check your internet settings and try again</string>
     <string name="placehoder_no_internet_button">Try again?</string>
+    <string name="settings_change_profile">Change Account Information</string>
+    <string name="settings_reset_password">Change Password</string>
+    <string name="settings_delete_history">Delete all Saved Projects</string>
+    <string name="settings_delete_account">Delete Account</string>
+    <string name="settings_log_out">Sign out</string>
 </resources>

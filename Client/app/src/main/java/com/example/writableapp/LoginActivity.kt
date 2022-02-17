@@ -64,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
             .add("password", password!!)
             .build()
 
-        val httpRequest = Request.Builder().url("http://65c6-35-247-56-171.ngrok.io/login")
+        val httpRequest = Request.Builder().url("http://a1c0-34-91-147-153.ngrok.io/login")
             .post(requestBody)
             .build()
 
@@ -94,12 +94,15 @@ class LoginActivity : AppCompatActivity() {
                         )
                     }
                     else -> {
-                        val user = Gson().fromJson(responseBody, User::class.java)
-                        DesignUtils.showSnackbar(
-                            window.decorView.rootView,
-                            user.getDisplayName(),
-                            this@LoginActivity
-                        )
+                        runOnUiThread {
+                            val user = Gson().fromJson(responseBody, User::class.java)
+                            val mainMenuIntent = Intent(this@LoginActivity, MainMenuActivity::class.java)
+                            mainMenuIntent.putExtra("USER_UID", user.getUID())
+                            mainMenuIntent.putExtra("USER_DISPLAY_NAME", user.getDisplayName())
+                            mainMenuIntent.putExtra("AVATAR_URL", user.getAvatarURL())
+                            mainMenuIntent.putExtra("EMAIL", user.getEmail())
+                            startActivity(mainMenuIntent)
+                        }
                     }
                 }
             }
