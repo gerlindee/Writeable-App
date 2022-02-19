@@ -3,11 +3,11 @@ package com.example.writableapp.Model
 class Project(
     private val pid: String,
     private val uid: String,
-    private val title: String,
+    private var title: String,
     private val imageURL: String,
-    private val description: String,
-    private val wordCount: String,
-    private val completed: String
+    private var description: String,
+    private var wordCount: String,
+    private var completed: String
 ) {
     fun getPID(): String {
         return this.pid
@@ -35,5 +35,21 @@ class Project(
 
     fun getCompleted(): String {
         return this.completed
+    }
+
+    fun setTitle(new_title: String) {
+        this.title = new_title
+    }
+
+    fun setDescription(new_description: String) {
+        this.description = new_description
+    }
+
+    fun setWordCount(new_wordCount: String) {
+        this.wordCount = new_wordCount
+    }
+
+    fun setComplete(new_complete: String) {
+        this.completed = new_complete
     }
 }

@@ -16,6 +16,7 @@ import com.example.writableapp.Adapters.ProjectsAdapter
 import com.example.writableapp.ChangeUserProfileActivity
 import com.example.writableapp.CreateProjectActivity
 import com.example.writableapp.Model.Project
+import com.example.writableapp.Model.User
 import com.example.writableapp.R
 import com.example.writableapp.Utils.Constants
 import com.google.android.material.button.MaterialButton
@@ -108,7 +109,14 @@ class ProjectsFragment : Fragment() {
                             userProjects.add(project)
                             userProjectsView!!.apply {
                                 layoutManager = LinearLayoutManager(context)
-                                adapter = ProjectsAdapter(context, userProjects)
+                                val currentUser = User(
+                                    uid = requireActivity().intent.extras!!.get("USER_UID").toString(),
+                                    display_name = requireActivity().intent.extras!!.get("USER_DISPLAY_NAME").toString(),
+                                    avatar_url = requireActivity().intent.extras!!.get("USER_AVATAR_URL").toString(),
+                                    email = requireActivity().intent.extras!!.get("USER_EMAIL").toString(),
+                                    password = ""
+                                )
+                                adapter = ProjectsAdapter(currentUser, context, userProjects)
                                 addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
                             }
                             userProjectsView!!.adapter?.notifyItemInserted(userProjects.size + 1)

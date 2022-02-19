@@ -37,4 +37,7 @@
     <string name="string_completed">Completed</string>
     <string name="hint_title">Title</string>
     <string name="hint_description">Description</string>
+    <string name="hint_word_count">Word Count</string>
+    <string name="string_update_project">Update Project</string>
+    <string name="hint_complete">Complete</string>
 </resources>
