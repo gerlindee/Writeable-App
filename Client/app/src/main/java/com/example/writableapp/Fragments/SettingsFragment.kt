@@ -115,7 +115,44 @@ class SettingsFragment : Fragment() {
         }
 
         settings_delete_history.setOnClickListener {
-            //TODO
+            AlertDialog.Builder(context)
+                .setTitle("Delete Created Projects")
+                .setMessage("Are you sure you want to delete all projects created so far?")
+                .setPositiveButton("Confirm") { _, _ ->
+                    run {
+                        val okHttpClient = OkHttpClient()
+
+                        val requestBody = FormBody.Builder()
+                            .add("user_uid", requireActivity().intent.extras!!.get("USER_UID").toString())
+                            .build()
+
+                        val httpRequest = Request.Builder().url(Constants.serverURL + "/deleteAllProjects")
+                            .post(requestBody)
+                            .build()
+
+                        okHttpClient.newCall(httpRequest).enqueue(object : Callback {
+                            override fun onFailure(call: Call, e: IOException) {
+                                Toast.makeText(
+                                    context,
+                                    "Could not connect to server!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+
+                            override fun onResponse(call: Call, response: Response) {
+                                val mainMenuIntent = requireActivity().intent
+                                val mainMenu = Intent(context, MainMenuActivity::class.java)
+                                mainMenu.putExtra("USER_DISPLAY_NAME", mainMenuIntent.extras!!.get("USER_DISPLAY_NAME").toString())
+                                mainMenu.putExtra("USER_EMAIL", mainMenuIntent.extras!!.get("USER_EMAIL").toString())
+                                mainMenu.putExtra("USER_AVATAR_URL", mainMenuIntent.extras!!.get("USER_AVATAR_URL").toString())
+                                mainMenu.putExtra("USER_UID", mainMenuIntent.extras!!.get("USER_UID").toString())
+                                startActivity(mainMenu)
+                            }
+                        })
+
+                    }
+                }
+                .show()
         }
     }
 
