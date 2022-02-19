@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.writableapp.Fragments.SettingsFragment
 import com.example.writableapp.Fragments.SprintFragment
-import com.example.writableapp.Fragments.WorksFragment
+import com.example.writableapp.Fragments.ProjectsFragment
 
 class MainMenuViewPagerAdapter(fragmentActivity: FragmentActivity): FragmentStateAdapter(fragmentActivity) {
 
@@ -18,7 +18,7 @@ class MainMenuViewPagerAdapter(fragmentActivity: FragmentActivity): FragmentStat
     override fun createFragment(position: Int): Fragment {
         when(position) {
             0 -> return SprintFragment()
-            1 -> return WorksFragment()
+            1 -> return ProjectsFragment()
             2 -> return SettingsFragment()
         }
         return SprintFragment() // default fragment, but this part should never be reached anyway

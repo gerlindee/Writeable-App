@@ -26,12 +26,12 @@ import java.io.IOException
 class RegisterActivity : AppCompatActivity() {
 
     // Web view for the Terms and Conditions
-    private var webView: WebView? = null
+    private var webView: WebView ?= null
 
     // User data from the screen
-    private var user: User? = null
-    private var repeatedPassword: String? = null
-    private var selectedPhotoUri: Uri? = null
+    private var user: User ?= null
+    private var repeatedPassword: String ?= null
+    private var selectedPhotoUri: Uri ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,11 +105,11 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun bindLayoutData() {
         user = User(
-            "",
-            register_username.text.toString(),
-            "/content/drive/MyDrive/Colab/20220216080735.png",
-            register_email.text.toString(),
-            register_password.text.toString()
+            uid = "",
+            display_name = register_username.text.toString(),
+            avatar_url = "/content/drive/MyDrive/Colab/20220216080735.png",
+            email = register_email.text.toString(),
+            password = register_password.text.toString()
         )
         repeatedPassword = register_r_password.text.toString()
     }

@@ -13,7 +13,7 @@
     <string name="placeholder_no_internet_title">Ooooops!</string>
     <string name="placeholder_no_internet_line_1">Slow or no internet connection.</string>
     <string name="placeholder_no_internet_line_2">Check your internet settings and try again</string>
-    <string name="placehoder_no_internet_button">Try again?</string>
+    <string name="placeholder_no_internet_button">Try again?</string>
     <string name="settings_change_profile">Change Account Information</string>
     <string name="settings_reset_password">Change Password</string>
     <string name="settings_delete_history">Delete all Saved Projects</string>
@@ -24,4 +24,17 @@
     <string name="string_save_changes">Save Changes</string>
     <string name="hint_current_password">Current Password</string>
     <string name="hint_new_password">New Password</string>
+    <string name="settings_delete_message">We\'re sad to see you go</string>
+    <string name="delete_acc_line_1">All the data associated with this account will \n be deleted, including your user profile information, \n sprinting history and crated projects.</string>
+    <string name="delete_acc_confirm">Confirm your E-mail Address</string>
+    <string name="placeholder_project_title">Project Title</string>
+    <string name="placeholder_project_description">Project Description</string>
+    <string name="placeholder_project_word_count_label">Word Count:</string>
+    <string name="placeholder_project_word_count">10.000</string>
+    <string name="string_create_project">Create Project</string>
+    <string name="placeholder_hm">Hmm...</string>
+    <string name="placeholder_empty_projects">Seems like you have not created any projects yet</string>
+    <string name="string_completed">Completed</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_description">Description</string>
 </resources>

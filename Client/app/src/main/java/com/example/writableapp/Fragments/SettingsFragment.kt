@@ -106,7 +106,7 @@ class SettingsFragment : Fragment() {
         }
 
         settings_delete_account.setOnClickListener {
-
+            //TODO
         }
 
         settings_log_out.setOnClickListener {
@@ -115,7 +115,7 @@ class SettingsFragment : Fragment() {
         }
 
         settings_delete_history.setOnClickListener {
-
+            //TODO
         }
     }
 
