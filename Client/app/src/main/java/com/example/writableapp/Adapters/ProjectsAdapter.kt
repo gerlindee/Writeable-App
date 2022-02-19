@@ -1,5 +1,6 @@
 package com.example.writableapp.Adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.writableapp.Fragments.ProjectsFragment
+import com.example.writableapp.MainMenuActivity
 import com.example.writableapp.Model.Project
 import com.example.writableapp.R
+import com.example.writableapp.Utils.Constants
 import com.example.writableapp.Utils.ImageLoaderUtils
+import okhttp3.*
+import java.io.IOException
 
 class ProjectsAdapter(
     private val mainContext: Context?,
@@ -25,9 +31,47 @@ class ProjectsAdapter(
         return projectsList.size
     }
 
-    override fun onBindViewHolder(holder: ProjectViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ProjectViewHolder,
+        @SuppressLint("RecyclerView") position: Int
+    ) {
         val project = projectsList[position]
         holder.bind(mainContext!!, project)
+
+        holder.editButton!!.setOnClickListener {
+
+        }
+
+        holder.deleteButton!!.setOnClickListener {
+            val okHttpClient = OkHttpClient()
+
+            val requestBody = FormBody.Builder()
+                .add("pid", project.getPID())
+                .build()
+
+            val httpRequest = Request.Builder().url(Constants.serverURL + "/deleteProject")
+                .post(requestBody)
+                .build()
+
+            okHttpClient.newCall(httpRequest).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    if (mainContext is MainMenuActivity) {
+                        (mainContext as MainMenuActivity).runOnUiThread {
+                            Toast.makeText(mainContext, "Could not connect to server!", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    if (mainContext is MainMenuActivity) {
+                        (mainContext as MainMenuActivity).runOnUiThread {
+                            projectsList.removeAt(position)
+                            notifyDataSetChanged()
+                        }
+                    }
+                }
+            })
+        }
     }
 
     class ProjectViewHolder(inflater: LayoutInflater, parent: ViewGroup) :

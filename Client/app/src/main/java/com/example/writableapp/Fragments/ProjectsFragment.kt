@@ -74,7 +74,9 @@ class ProjectsFragment : Fragment() {
 
         okHttpClient.newCall(httpRequest).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                Toast.makeText(context, "Could not connect to server!", Toast.LENGTH_LONG).show()
+                requireActivity().runOnUiThread {
+                    Toast.makeText(context, "Could not connect to server!", Toast.LENGTH_LONG).show()
+                }
             }
 
             @SuppressLint("NotifyDataSetChanged")
