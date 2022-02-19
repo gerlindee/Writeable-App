@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.writableapp.Adapters.ProjectsAdapter
-import com.example.writableapp.ChangeUserProfileActivity
 import com.example.writableapp.CreateProjectActivity
 import com.example.writableapp.Model.Project
 import com.example.writableapp.Model.User
@@ -37,12 +36,14 @@ class ProjectsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_projects, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        initializeLayoutElements()
+        setupProjects()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        initializeLayoutElements()
-
-        setupProjects()
 
         button_create_project.setOnClickListener {
             val mainMenuIntent = requireActivity().intent
@@ -63,6 +64,8 @@ class ProjectsFragment : Fragment() {
     }
 
     private fun setupProjects() {
+        userProjects = ArrayList()
+
         val okHttpClient = OkHttpClient()
 
         val requestBody = FormBody.Builder()
@@ -117,9 +120,7 @@ class ProjectsFragment : Fragment() {
                                     password = ""
                                 )
                                 adapter = ProjectsAdapter(currentUser, context, userProjects)
-                                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
                             }
-                            userProjectsView!!.adapter?.notifyItemInserted(userProjects.size + 1)
                             userProjectsView!!.adapter?.notifyDataSetChanged()
                         }
                     }

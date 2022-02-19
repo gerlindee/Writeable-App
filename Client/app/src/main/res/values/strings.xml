@@ -40,4 +40,8 @@
     <string name="hint_word_count">Word Count</string>
     <string name="string_update_project">Update Project</string>
     <string name="hint_complete">Complete</string>
+    <string name="placeholder_time">00:00</string>
+    <string name="string_start_sprint">Start Sprint</string>
+    <string name="string_end_sprint">End Sprint</string>
+    <string name="string_save_sprint">Update Word Count</string>
 </resources>
