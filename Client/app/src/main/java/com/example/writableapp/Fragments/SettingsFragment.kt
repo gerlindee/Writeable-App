@@ -106,7 +106,47 @@ class SettingsFragment : Fragment() {
         }
 
         settings_delete_account.setOnClickListener {
-            //TODO
+            AlertDialog.Builder(context)
+                .setTitle("Delete Account")
+                .setMessage("Are you sure you want to delete your account? This action is irreversible, and all your created projects will be deleted as well!")
+                .setPositiveButton("Confirm") { _, _ ->
+                    run {
+                        val okHttpClient = OkHttpClient()
+
+                        val requestBody = FormBody.Builder()
+                            .add("user_uid", requireActivity().intent.extras!!.get("USER_UID").toString())
+                            .build()
+
+                        val httpRequest = Request.Builder().url(Constants.serverURL + "/deleteUser")
+                            .post(requestBody)
+                            .build()
+
+                        okHttpClient.newCall(httpRequest).enqueue(object : Callback {
+                            override fun onFailure(call: Call, e: IOException) {
+                                Toast.makeText(
+                                    context,
+                                    "Could not connect to server!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+
+                            override fun onResponse(call: Call, response: Response) {
+                                requireActivity().runOnUiThread {
+                                    Toast.makeText(
+                                        context,
+                                        "Account successfully deleted!",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+
+                                    val loginIntent = Intent(context, LoginActivity::class.java)
+                                    startActivity(loginIntent)
+                                }
+                            }
+                        })
+
+                    }
+                }
+                .show()
         }
 
         settings_log_out.setOnClickListener {
@@ -154,13 +194,5 @@ class SettingsFragment : Fragment() {
                 }
                 .show()
         }
-    }
-
-    private fun deleteDatabaseAuth() {
-
-    }
-
-    private fun deletePlayingHistory() {
-
     }
 }
