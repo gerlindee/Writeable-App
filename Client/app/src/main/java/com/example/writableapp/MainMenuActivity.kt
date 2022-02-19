@@ -3,6 +3,7 @@ package com.example.writableapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.viewpager2.widget.ViewPager2
 import com.example.writableapp.Adapters.MainMenuViewPagerAdapter

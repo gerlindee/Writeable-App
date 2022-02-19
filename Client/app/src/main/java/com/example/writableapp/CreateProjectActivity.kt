@@ -10,6 +10,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.example.writableapp.Exceptions.EmptyFieldsException
 import com.example.writableapp.Exceptions.IException
